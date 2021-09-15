@@ -2,6 +2,7 @@ package com.bosonit.jdbctemplatecrud.persona.domain;
 
 
 import com.bosonit.jdbctemplatecrud.persona.infrastructure.controller.dto.input.PersonaDtoInput;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +10,7 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
-
+@AllArgsConstructor
 public class Persona {
     Integer id;
     String password;

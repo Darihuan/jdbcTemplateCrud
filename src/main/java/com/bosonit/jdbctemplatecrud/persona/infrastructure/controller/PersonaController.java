@@ -5,8 +5,10 @@ import com.bosonit.jdbctemplatecrud.persona.infrastructure.controller.dto.input.
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -21,12 +23,12 @@ public class PersonaController {
     }
 
     @GetMapping("personas/{id}")
-    ResponseEntity<?> getPersonaById(@PathVariable("id") String id) {
-        return ResponseEntity.status(HttpStatus.OK).body("NO IMPLEMENTADO");
+    ResponseEntity<?> getPersonaById(@PathVariable("id") Integer id) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getPersonaById(id));
     }
 
     @PostMapping("personas")
-    ResponseEntity<?> createPersona(@RequestBody PersonaDtoInput persona) {
+    ResponseEntity<?> createPersona(@RequestBody @Valid PersonaDtoInput persona) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(service.savePersona(persona));
         } catch (Exception e) {
@@ -35,13 +37,14 @@ public class PersonaController {
     }
 
     @PutMapping("personas/{id}")
-    ResponseEntity<?> updatePersona(@PathVariable("id") String id, @RequestBody PersonaDtoInput persona) {
-        return ResponseEntity.status(HttpStatus.OK).body("NO IMPLEMENTADO");
+    ResponseEntity<?> updatePersona(@PathVariable("id") Integer id, @RequestBody @Valid PersonaDtoInput persona) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.updatePersona(persona,id));
     }
 
     @DeleteMapping("personas/{id}")
-    ResponseEntity<?> updatePersona(@PathVariable("id") String id) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("");
+    ResponseEntity<?> deletePersona(@PathVariable("id") Integer id) {
+        service.deletePersona(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Borrado");
     }
 
 

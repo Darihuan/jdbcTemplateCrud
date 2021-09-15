@@ -11,7 +11,7 @@ public interface IPersonaService {
 
     PersonaDtoOutput getPersonaById(Integer id) throws NotFoundexception;
 
-    int savePersona(PersonaDtoInput persona) throws Exception;
+    PersonaDtoOutput savePersona(PersonaDtoInput persona) throws Exception;
 
     PersonaDtoOutput updatePersona(PersonaDtoInput persona, Integer id) throws NotFoundexception;
 

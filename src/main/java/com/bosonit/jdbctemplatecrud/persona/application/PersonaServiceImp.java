@@ -23,25 +23,46 @@ public class PersonaServiceImp implements IPersonaService {
 
     @Override
     public PersonaDtoOutput getPersonaById(Integer id) throws NotFoundexception {
-        return null;
+        try {
+            Persona personas = repository.getPersonaById(id).get(0);
+            return new PersonaDtoOutput(personas);
+        } catch (Exception e) {
+            throw new NotFoundexception(e.getMessage());
+        }
     }
 
     @Override
-    public int savePersona(PersonaDtoInput persona) throws Exception {
+    public PersonaDtoOutput savePersona(PersonaDtoInput persona) throws Exception {
         Persona guardar = new Persona(persona);
-
-        return repository.insertPersona(guardar);
+        PersonaDtoOutput devolver = null;
+        if (repository.insertPersona(guardar) != 0) {
+            devolver = new PersonaDtoOutput(guardar);
+        }
+        return devolver;
 
 
     }
 
     @Override
     public PersonaDtoOutput updatePersona(PersonaDtoInput persona, Integer id) throws NotFoundexception {
-        return null;
+        try {
+            Persona personaEntity = new Persona(persona);
+            PersonaDtoOutput devolver = null;
+            if (repository.updatePersona(persona, id) != 0)
+                devolver = new PersonaDtoOutput(personaEntity);
+            return devolver;
+
+        } catch (Exception e) {
+            throw new NotFoundexception("No existe persona con id:" + id);
+        }
     }
 
     @Override
     public void deletePersona(Integer id) throws NotFoundexception {
-
+        try {
+            repository.deletePersona(id);
+        } catch (Exception e) {
+            throw new NotFoundexception("No existe persona con id:" + id);
+        }
     }
 }
